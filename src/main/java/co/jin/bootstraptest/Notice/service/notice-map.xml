@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="co.jin.bootstraptest.Notice.service.NoticeMapper">
+	<select id = "noticeSelectList" resultType="co.jin.bootstraptest.Notice.vo.NoticeVO">
+		SELECT * FROM NOTICE ORDER BY ID DESC
+	</select>
+	
+	<select id = "noticeSearchList" resultType="co.jin.bootstraptest.Notice.vo.NoticeVO">
+		SELECT * FROM NOTICE
+		WHERE
+		<if test = "key == 1"> 1 = 1</if>
+		<if test = "key == 2"> WRITER = #{val}</if>
+		<if test = "key == 3"> TITLE LIKE '%'|| #{val} ||'%'</if>
+		<if test = "key == 4"> SUBJECT LIKE '%'|| #{val} ||'%'</if>
+		ORDER BY ID DESC
+	</select>
+	
+	<select id = "noticeSelect" resultType="co.jin.bootstraptest.Notice.vo.NoticeVO">
+		SELECT * FROM NOTICE WHERE ID = #{id}
+	</select>
+	<insert id = "noticeInsert" parameterType="co.jin.bootstraptest.Notice.vo.NoticeVO">
+		INSERT INTO NOTICE
+		VALUES(b_id.nextVal,#{writer},#{title},#{subject},#{wdate},#{hit},#{fileName},#{dirFileName})
+	</insert>
+	<update id = "noticeUpdate" parameterType="co.jin.bootstraptest.Notice.vo.NoticeVO">
+	
+	</update>
+	<delete id = "noticeDelete" parameterType="co.jin.bootstraptest.Notice.vo.NoticeVO">
+		DELETE FROM NOTICE WHERE ID = #{id}
+	</delete>
+	<update id = "noticeHitUpdate" parameterType="int">
+		UPDATE NOTICE SET HIT = HIT + 1, WHERE ID = #{id}
+	</update>
+
+
+
+</mapper>
